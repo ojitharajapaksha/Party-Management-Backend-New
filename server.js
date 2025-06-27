@@ -19,11 +19,10 @@ app.use(cors({
     'http://127.0.0.1:5173', 
     'http://127.0.0.1:5174', 
     'http://127.0.0.1:5175',
-    // Production Vercel URLs - including variations
-    'https://slt-mobitel-consent-review-page.vercel.app',
-    'https://sIt-mobitel-consent-review-page.vercel.app',
-    // Allow all vercel.app subdomains for this project
-    /^https:\/\/.*-mobitel-consent.*\.vercel\.app$/
+    // Production Vercel URLs - replace with your actual Vercel URL
+    'https://your-vercel-deployment-url.vercel.app',
+    // Allow all vercel.app subdomains for this project (keep this as backup)
+    /^https:\/\/.*\.vercel\.app$/
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
