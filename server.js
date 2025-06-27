@@ -19,15 +19,28 @@ app.use(cors({
     'http://127.0.0.1:5173', 
     'http://127.0.0.1:5174', 
     'http://127.0.0.1:5175',
-    // Production Vercel URL - your actual frontend
-    'https://slt-mobitel-consent-review-page.vercel.app'
+    // Production Vercel URLs - including variations
+    'https://slt-mobitel-consent-review-page.vercel.app',
+    'https://sIt-mobitel-consent-review-page.vercel.app',
+    // Allow all vercel.app subdomains for this project
+    /^https:\/\/.*-mobitel-consent.*\.vercel\.app$/
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'X-Requested-With'],
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar']
 }));
 
 app.use(express.json());
+
+// Handle preflight OPTIONS requests
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Accept, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
 
 // Add request logging for debugging
 app.use((req, res, next) => {
