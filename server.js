@@ -19,7 +19,7 @@ app.use(cors({
     'http://127.0.0.1:5173', 
     'http://127.0.0.1:5174', 
     'http://127.0.0.1:5175',
-    // Production Vercel URL - Updated with correct URL
+    // Production Vercel URL - your actual frontend
     'https://slt-mobitel-consent-review-page.vercel.app'
   ],
   credentials: true,
