@@ -19,8 +19,8 @@ app.use(cors({
     'http://127.0.0.1:5173', 
     'http://127.0.0.1:5174', 
     'http://127.0.0.1:5175',
-    // Production Vercel URL
-    'https://consent-management-system-api.vercel.app'
+    // Production Vercel URL - Updated with correct URL
+    'https://slt-mobitel-consent-review-page.vercel.app'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
@@ -82,4 +82,23 @@ app.use('*', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+// Graceful error handling for server startup
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🗄️  MongoDB: ${mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'}`);
+});
+
+// Handle server errors
+server.on('error', (err) => {
+  console.error('❌ Server error:', err);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  server.close(() => {
+    console.log('Process terminated');
+  });
+});
